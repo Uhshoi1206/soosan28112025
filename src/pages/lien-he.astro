@@ -11,251 +11,94 @@ import { addressRegions } from '../lib/constants/addressData';
   description="Liên hệ với chúng tôi để được tư vấn về xe tải, cẩu, mooc, đầu kéo. Hotline: 0764 6789 01"
 >
   <Layout client:load>
-    <!-- Hero Section -->
-    <div class="bg-gradient-to-br from-primary/5 via-primary/10 to-white py-16">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto text-center">
-          <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            Liên Hệ Với Chúng Tôi
-          </h1>
-          <p class="text-xl text-gray-600 leading-relaxed">
-            Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng tư vấn và hỗ trợ bạn 24/7
-          </p>
-        </div>
-      </div>
-    </div>
+    <div class="container mx-auto px-4 py-12">
+      <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-4">Liên Hệ Với Chúng Tôi</h1>
+        <p class="text-center text-gray-600 mb-12">
+          Hãy để lại thông tin, chúng tôi sẽ liên hệ tư vấn miễn phí cho bạn!
+        </p>
 
-    <div class="container mx-auto px-4 -mt-8 mb-16">
-      <div class="max-w-7xl mx-auto">
-
-        <!-- Contact Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <!-- Phone Card -->
-          <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow p-8 border border-gray-100">
-            <div class="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-bold mb-3">Hotline</h3>
-            <a href="tel:0764678901" class="text-3xl font-bold text-primary hover:text-primary/80 transition-colors block mb-2">
-              0764 6789 01
-            </a>
-            <p class="text-gray-600">Hỗ trợ 24/7 - Miễn phí tư vấn</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div>
+            <h2 class="text-2xl font-bold mb-6">Gửi Yêu Cầu Tư Vấn</h2>
+            <ContactForm client:load />
           </div>
 
-          <!-- Email Card -->
-          <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow p-8 border border-gray-100">
-            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-bold mb-3">Email</h3>
-            <a href="mailto:sales@soosanmotor.com" class="text-lg font-semibold text-primary hover:text-primary/80 transition-colors block mb-2">
-              sales@soosanmotor.com
-            </a>
-            <p class="text-gray-600">Phản hồi trong 24 giờ</p>
-          </div>
+          <div>
+            <h2 class="text-2xl font-bold mb-6">Thông Tin Liên Hệ</h2>
 
-          <!-- Location Card -->
-          <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow p-8 border border-gray-100">
-            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-bold mb-3">Địa Chỉ</h3>
-            <p class="text-lg font-semibold text-gray-900 mb-2">
-              Toàn Quốc
-            </p>
-            <p class="text-gray-600">Hệ thống showroom 63 tỉnh thành</p>
-          </div>
-        </div>
-
-        <!-- Main Content Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-16">
-
-          <!-- Contact Form - Takes 3 columns -->
-          <div class="lg:col-span-3">
-            <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-              <div class="mb-8">
-                <h2 class="text-3xl font-bold mb-3">Gửi Yêu Cầu Tư Vấn</h2>
-                <p class="text-gray-600">Điền thông tin bên dưới, chúng tôi sẽ liên hệ trong thời gian sớm nhất</p>
-              </div>
-              <ContactForm client:load />
-            </div>
-          </div>
-
-          <!-- Sidebar Info - Takes 2 columns -->
-          <div class="lg:col-span-2 space-y-6">
-
-            <!-- Working Hours -->
-            <div class="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20">
-              <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
-                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                </div>
-                <h3 class="text-2xl font-bold">Giờ Làm Việc</h3>
-              </div>
-
-              <div class="space-y-4">
-                <div class="flex items-center justify-between p-4 bg-white rounded-xl">
-                  <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span class="font-medium text-gray-700">Thứ 2 - Thứ 6</span>
-                  </div>
-                  <span class="font-bold text-gray-900">8:00 - 18:00</span>
-                </div>
-
-                <div class="flex items-center justify-between p-4 bg-white rounded-xl">
-                  <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    <span class="font-medium text-gray-700">Thứ 7</span>
-                  </div>
-                  <span class="font-bold text-gray-900">8:00 - 17:00</span>
-                </div>
-
-                <div class="flex items-center justify-between p-4 bg-white rounded-xl">
-                  <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 bg-orange-500 rounded-full"></div>
-                    <span class="font-medium text-gray-700">Chủ Nhật</span>
-                  </div>
-                  <span class="font-bold text-gray-900">8:00 - 12:00</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Quick Support -->
-            <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-              <h3 class="text-xl font-bold mb-6">Hỗ Trợ Nhanh</h3>
-              <div class="space-y-4">
-                <a href="https://zalo.me/0764678901" target="_blank" rel="noopener noreferrer"
-                   class="flex items-center gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                  <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 20.2A1 1 0 003.8 21.454l3.032-.892A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="font-semibold text-gray-900 group-hover:text-blue-600">Chat Zalo</div>
-                    <div class="text-sm text-gray-600">Trả lời ngay lập tức</div>
-                  </div>
-                </a>
-
-                <a href="https://m.me/soosanmotor" target="_blank" rel="noopener noreferrer"
-                   class="flex items-center gap-4 p-4 rounded-xl hover:bg-blue-50 transition-colors group">
-                  <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.912 1.446 5.511 3.708 7.203V22l3.412-1.872c.91.252 1.876.386 2.88.386 5.523 0 10-4.145 10-9.243C22 6.145 17.523 2 12 2z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="font-semibold text-gray-900 group-hover:text-blue-600">Facebook Messenger</div>
-                    <div class="text-sm text-gray-600">Nhắn tin trực tiếp</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Map Section -->
-        <div class="mb-16">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold mb-3">Showroom Trụ Sở Chính</h2>
-            <p class="text-gray-600 text-lg">Ghé thăm showroom để trải nghiệm sản phẩm trực tiếp</p>
-          </div>
-
-          <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-            <div class="aspect-[21/9] relative">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3215391393044!2d106.66428631533431!3d10.786834692315824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ed23c8d0f93%3A0x5b6a448380a9b467!2zSOG7jSBDaMOtIE1pbmg!5e0!3m2!1svi!2s!4v1234567890123!5m2!1svi!2s"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                class="absolute inset-0"
-              ></iframe>
-            </div>
-            <div class="p-6 bg-gradient-to-r from-gray-50 to-white">
+            <div class="space-y-6">
               <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
                   </svg>
                 </div>
                 <div>
-                  <h3 class="text-xl font-bold mb-2">Văn Phòng & Showroom Trụ Sở</h3>
-                  <p class="text-gray-700 mb-1">Quận 1, Thành phố Hồ Chí Minh</p>
-                  <p class="text-sm text-gray-600">Mở cửa: Thứ 2 - Thứ 7 | 8:00 - 18:00</p>
+                  <h3 class="font-bold mb-1">Hotline</h3>
+                  <a href="tel:0764678901" class="text-primary text-xl font-bold hover:underline">
+                    0764 6789 01
+                  </a>
+                  <p class="text-sm text-gray-600 mt-1">Hỗ trợ 24/7</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold mb-1">Email</h3>
+                  <a href="mailto:sales@soosanmotor.com" class="text-primary hover:underline">
+                    sales@soosanmotor.com
+                  </a>
+                  <p class="text-sm text-gray-600 mt-1">Phản hồi trong 24h</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-bold mb-1">Địa Chỉ</h3>
+                  <p class="text-gray-700">
+                    Hệ thống chi nhánh toàn quốc
+                  </p>
+                  <p class="text-sm text-gray-600 mt-1">Xem chi tiết bên dưới</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+              <h3 class="font-bold mb-4">Giờ làm việc</h3>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Thứ 2 - Thứ 6:</span>
+                  <span class="font-medium">8:00 - 18:00</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Thứ 7:</span>
+                  <span class="font-medium">8:00 - 17:00</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Chủ nhật:</span>
+                  <span class="font-medium">8:00 - 12:00</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Regional Branches -->
-        <div class="mb-8">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold mb-3">Hệ Thống Chi Nhánh Toàn Quốc</h2>
-            <p class="text-gray-600 text-lg">Chúng tôi có mặt tại 63 tỉnh thành, sẵn sàng phục vụ mọi nhu cầu của bạn</p>
-          </div>
+        <div class="mt-12">
+          <h2 class="text-2xl font-bold text-center mb-8">Hệ Thống Chi Nhánh Toàn Quốc</h2>
           <AddressRegions client:load regions={addressRegions} />
         </div>
-
-        <!-- Why Choose Us -->
-        <div class="bg-gradient-to-br from-primary/5 to-white rounded-2xl p-12 border border-primary/10">
-          <h2 class="text-3xl font-bold text-center mb-12">Tại Sao Chọn Chúng Tôi?</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="text-center">
-              <div class="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Uy Tín Hàng Đầu</h3>
-              <p class="text-gray-600 text-sm">15+ năm kinh nghiệm trong ngành</p>
-            </div>
-
-            <div class="text-center">
-              <div class="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Giá Cả Hợp Lý</h3>
-              <p class="text-gray-600 text-sm">Cam kết giá tốt nhất thị trường</p>
-            </div>
-
-            <div class="text-center">
-              <div class="w-16 h-16 bg-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                </svg>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Hỗ Trợ 24/7</h3>
-              <p class="text-gray-600 text-sm">Tư vấn và chăm sóc không ngừng nghỉ</p>
-            </div>
-
-            <div class="text-center">
-              <div class="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-              </div>
-              <h3 class="font-bold text-lg mb-2">Giao Hàng Nhanh</h3>
-              <p class="text-gray-600 text-sm">Vận chuyển toàn quốc an toàn</p>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </Layout>
