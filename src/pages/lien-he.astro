@@ -2,102 +2,118 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Layout from '../components/Layout.tsx';
 import ContactForm from '../components/ContactForm.tsx';
-import AddressRegions from '../components/AddressRegions.tsx';
-import { addressRegions } from '../lib/constants/addressData';
+import { Card } from '../components/ui/card';
+import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 ---
 
 <BaseLayout
-  title="Liên Hệ | soosanmotor.com"
-  description="Liên hệ với chúng tôi để được tư vấn về xe tải, cẩu, mooc, đầu kéo. Hotline: 0764 6789 01"
+  title="Liên Hệ | soosanmotor.com - Nhà sản xuất sơ mi rơ moóc, cẩu, thùng xe tải đông lạnh, Xe xitéc (bồn) chở xăng dầu, xe chuyên dụng hàng đầu tại Việt Nam"
+  description="Liên hệ với soosanmotor.com để được tư vấn và báo giá tốt nhất cho xe tải, xe cẩu, sơ mi rơ mooc, xe xitéc (bồn) chở xăng dầu và các loại xe chuyên dụng khác. Hotline: 0764 6789 01"
 >
   <Layout client:load>
-    <div class="container mx-auto px-4 py-12">
-      <div class="max-w-6xl mx-auto">
-        <h1 class="text-4xl font-bold text-center mb-4">Liên Hệ Với Chúng Tôi</h1>
-        <p class="text-center text-gray-600 mb-12">
-          Hãy để lại thông tin, chúng tôi sẽ liên hệ tư vấn miễn phí cho bạn!
+    {/* Page Header */}
+    <div class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-2">Liên Hệ</h1>
+        <p class="text-gray-300">
+          Liên hệ với chúng tôi để được tư vấn và báo giá tốt nhất
         </p>
+      </div>
+    </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          <div>
-            <h2 class="text-2xl font-bold mb-6">Gửi Yêu Cầu Tư Vấn</h2>
-            <ContactForm client:load />
+    {/* Contact Info Cards */}
+    <div class="container mx-auto py-12 px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <Phone className="w-6 h-6" />
           </div>
+          <h3 class="text-lg font-bold mb-1">Điện thoại</h3>
+          <p class="text-gray-600">
+            <a
+              href="tel:0764678901"
+              class="hover:underline font-semibold text-black"
+              aria-label="Gọi ngay 0764 6789 01"
+            >0764 6789 01</a>
+          </p>
+        </Card>
 
-          <div>
-            <h2 class="text-2xl font-bold mb-6">Thông Tin Liên Hệ</h2>
-
-            <div class="space-y-6">
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold mb-1">Hotline</h3>
-                  <a href="tel:0764678901" class="text-primary text-xl font-bold hover:underline">
-                    0764 6789 01
-                  </a>
-                  <p class="text-sm text-gray-600 mt-1">Hỗ trợ 24/7</p>
-                </div>
-              </div>
-
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold mb-1">Email</h3>
-                  <a href="mailto:sales@soosanmotor.com" class="text-primary hover:underline">
-                    sales@soosanmotor.com
-                  </a>
-                  <p class="text-sm text-gray-600 mt-1">Phản hồi trong 24h</p>
-                </div>
-              </div>
-
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="font-bold mb-1">Địa Chỉ</h3>
-                  <p class="text-gray-700">
-                    Hệ thống chi nhánh toàn quốc
-                  </p>
-                  <p class="text-sm text-gray-600 mt-1">Xem chi tiết bên dưới</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-8 p-6 bg-gray-50 rounded-lg">
-              <h3 class="font-bold mb-4">Giờ làm việc</h3>
-              <div class="space-y-2 text-sm">
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Thứ 2 - Thứ 6:</span>
-                  <span class="font-medium">8:00 - 18:00</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Thứ 7:</span>
-                  <span class="font-medium">8:00 - 17:00</span>
-                </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Chủ nhật:</span>
-                  <span class="font-medium">8:00 - 12:00</span>
-                </div>
-              </div>
-            </div>
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <Mail className="w-6 h-6" />
           </div>
+          <h3 class="text-lg font-bold mb-1">Email</h3>
+          <p class="text-gray-600">sales@soosanmotor.com</p>
+        </Card>
+
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <MapPin className="w-6 h-6" />
+          </div>
+          <h3 class="text-lg font-bold mb-1">Địa chỉ</h3>
+          <p class="text-gray-600">Cụm công nghiệp Hạp Lĩnh, Phường Hạp Lĩnh, Tỉnh Bắc Ninh, Việt Nam</p>
+        </Card>
+
+        <Card className="p-6 flex flex-col items-center text-center" client:load>
+          <div class="w-14 h-14 flex items-center justify-center bg-red-50 text-primary rounded-full mb-4">
+            <Clock className="w-6 h-6" />
+          </div>
+          <h3 class="text-lg font-bold mb-1">Giờ làm việc</h3>
+          <p class="text-gray-600">Thứ Hai - Thứ Bảy: 8:00 - 18:00</p>
+        </Card>
+      </div>
+
+      {/* Contact Form & Map */}
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-2xl font-bold mb-6">Gửi yêu cầu tư vấn</h2>
+          <p class="text-gray-600 mb-6">
+            Vui lòng điền đầy đủ thông tin bên dưới.
+            Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.
+          </p>
+
+          <ContactForm client:load source="trang-lien-he" />
         </div>
 
-        <div class="mt-12">
-          <h2 class="text-2xl font-bold text-center mb-8">Hệ Thống Chi Nhánh Toàn Quốc</h2>
-          <AddressRegions client:load regions={addressRegions} />
+        <div>
+          <h2 class="text-2xl font-bold mb-6">Bản đồ</h2>
+          <div class="aspect-video overflow-hidden rounded-lg shadow-md">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1905185.2025095064!2d103.76776639375001!3d21.149817400000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31350b71d69836ab%3A0xdc5e9d49bf6747be!2sSOOSAN%20VINA%20MOTOR!5e0!3m2!1sen!2s!4v1755425329698!5m2!1sen!2s"
+              width="100%"
+              height="100%"
+              style="border: 0;"
+              allowfullscreen
+              loading="lazy"
+              title="Địa chỉ Soosan (Doosung)"
+            ></iframe>
+          </div>
+
+          <div class="mt-6">
+            <h3 class="text-xl font-bold mb-3">Thông tin liên hệ</h3>
+            <div class="space-y-3">
+              <p class="flex items-start">
+                <Phone className="h-5 w-5 mr-2 text-primary flex-shrink-0" />
+                <span class="text-gray-700">
+                  Hotline: <a
+                    href="tel:0764678901"
+                    class="hover:underline font-semibold text-black"
+                    aria-label="Gọi ngay 0764 6789 01"
+                  >0764 6789 01</a> (Tư vấn miễn phí 24/7)
+                </span>
+              </p>
+              <p class="flex items-start">
+                <Mail className="h-5 w-5 mr-2 text-primary flex-shrink-0" />
+                <span class="text-gray-700">Email: sales@soosanmotor.com</span>
+              </p>
+              <p class="flex items-start">
+                <MapPin className="h-5 w-5 mr-2 text-primary flex-shrink-0 mt-1" />
+                <span class="text-gray-700">
+                  Địa chỉ: Cụm công nghiệp Hạp Lĩnh, Phường Hạp Lĩnh, Tỉnh Bắc Ninh, Việt Nam
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
