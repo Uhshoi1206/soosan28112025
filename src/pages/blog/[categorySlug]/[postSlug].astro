@@ -1,39 +1,52 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Layout from '../../components/Layout.tsx';
-import { getVisibleBlogPosts } from '../../utils/contentCollections';
-import { getBlogCategories } from '../../utils/blogCategories';
-import { OptimizedImage } from '../../components/ui/optimized-image.tsx';
-import TableOfContents from '../../components/blog/TableOfContents.tsx';
-import '../../components/blog/BlogStyles.css';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Layout from '../../../components/Layout.tsx';
+import { getCollection } from 'astro:content';
+import { getBlogCategories } from '../../../utils/blogCategories';
+import { OptimizedImage } from '../../../components/ui/optimized-image.tsx';
+import TableOfContents from '../../../components/blog/TableOfContents.tsx';
+import '../../../components/blog/BlogStyles.css';
+
+export const prerender = true;
 
 export async function getStaticPaths() {
-  const allPosts = await getVisibleBlogPosts();
+  const allPosts = await getCollection('blog');
   const { getCategorySlug } = await getBlogCategories();
 
-  return allPosts.map((post) => ({
-    params: {
-      categorySlug: getCategorySlug(post.category),
-      postSlug: post.slug
-    },
-    props: { post },
-  }));
+  return allPosts
+    .filter(post => !post.data.isHidden)
+    .map((post) => {
+      const slug = post.data.slug || post.id.replace(/\.md$/, '');
+      return {
+        params: {
+          categorySlug: getCategorySlug(post.data.category),
+          postSlug: slug
+        },
+        props: { post },
+      };
+    });
 }
 
 const { post } = Astro.props;
+const { Content } = await post.render();
+const postData = post.data;
 const { categoryMap, getCategorySlug } = await getBlogCategories();
-const categoryLabel = categoryMap[post.category] || post.category;
-const categorySlug = getCategorySlug(post.category);
+const categoryLabel = categoryMap[postData.category] || postData.category;
+const categorySlug = getCategorySlug(postData.category);
 
-const allPosts = await getVisibleBlogPosts();
+const allPosts = await getCollection('blog');
+const currentSlug = postData.slug || post.id.replace(/\.md$/, '');
 const relatedPosts = allPosts
-  .filter(p => p.category === post.category && p.slug !== post.slug)
+  .filter(p => {
+    const pSlug = p.data.slug || p.id.replace(/\.md$/, '');
+    return !p.data.isHidden && p.data.category === postData.category && pSlug !== currentSlug;
+  })
   .slice(0, 3);
 ---
 
 <BaseLayout
-  title={`${post.title} | Blog soosanmotor.com`}
-  description={post.description}
+  title={`${postData.title} | Blog soosanmotor.com`}
+  description={postData.description}
 >
   <Layout client:load>
     <article class="container mx-auto px-4 py-8">
@@ -46,33 +59,33 @@ const relatedPosts = allPosts
             >
               {categoryLabel}
             </a>
-            <time datetime={post.publishDate}>
-              {new Date(post.publishDate).toLocaleDateString('vi-VN', {
+            <time datetime={postData.publishDate}>
+              {new Date(postData.publishDate).toLocaleDateString('vi-VN', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
               })}
             </time>
-            <span>{post.readTime}</span>
+            <span>{postData.readTime} phút đọc</span>
           </div>
 
-          <h1 class="text-4xl font-bold mb-4">{post.title}</h1>
+          <h1 class="text-4xl font-bold mb-4">{postData.title}</h1>
 
           <p class="text-xl text-gray-600 mb-6">
-            {post.description}
+            {postData.description}
           </p>
 
           <div class="flex items-center gap-4 text-sm text-gray-600">
-            <span>Tác giả: {post.author}</span>
+            <span>Tác giả: {postData.author}</span>
           </div>
         </div>
 
-        {post.images && post.images[0] && (
+        {postData.images && postData.images[0] && (
           <div class="mb-8 rounded-lg overflow-hidden">
             <OptimizedImage
               client:load
-              src={post.images[0]}
-              alt={post.title}
+              src={postData.images[0]}
+              alt={postData.title}
               className="w-full h-auto"
               useCase="gallery"
             />
@@ -81,12 +94,14 @@ const relatedPosts = allPosts
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div class="lg:col-span-3">
-            <div class="prose prose-lg max-w-none blog-content" set:html={post.content} />
+            <div class="prose prose-lg max-w-none blog-content">
+              <Content />
+            </div>
           </div>
 
           <aside class="lg:col-span-1">
             <div class="sticky top-8">
-              <TableOfContents client:load content={post.content} />
+              <TableOfContents client:load content={post.body} />
             </div>
           </aside>
         </div>
@@ -96,28 +111,29 @@ const relatedPosts = allPosts
             <h2 class="text-2xl font-bold mb-6">Bài viết liên quan</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedPosts.map((relatedPost) => {
-                const relCategorySlug = getCategorySlug(relatedPost.category);
+                const relCategorySlug = getCategorySlug(relatedPost.data.category);
+                const relSlug = relatedPost.data.slug || relatedPost.id.replace(/\.md$/, '');
                 return (
                   <a
-                    href={`/${relCategorySlug}/${relatedPost.slug}`}
+                    href={`/blog/${relCategorySlug}/${relSlug}`}
                     class="group"
                   >
                     <article class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition">
-                      {relatedPost.images && relatedPost.images[0] && (
+                      {relatedPost.data.images && relatedPost.data.images[0] && (
                         <OptimizedImage
                           client:load
-                          src={relatedPost.images[0]}
-                          alt={relatedPost.title}
+                          src={relatedPost.data.images[0]}
+                          alt={relatedPost.data.title}
                           className="w-full h-48 object-cover"
                           useCase="thumbnail"
                         />
                       )}
                       <div class="p-4">
                         <h3 class="font-bold mb-2 group-hover:text-primary transition line-clamp-2">
-                          {relatedPost.title}
+                          {relatedPost.data.title}
                         </h3>
                         <p class="text-sm text-gray-600 line-clamp-2">
-                          {relatedPost.description}
+                          {relatedPost.data.description}
                         </p>
                       </div>
                     </article>
