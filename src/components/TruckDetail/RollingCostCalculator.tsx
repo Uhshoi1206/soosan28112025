@@ -34,15 +34,17 @@ const RollingCostCalculator: React.FC<RollingCostCalculatorProps> = ({ truck }) 
   const [selectedProvinceKey, setSelectedProvinceKey] = useState<string>(PROVINCES[0].value);
   const [otherServiceFee, setOtherServiceFee] = useState<string>('500,000');
   const [includePhysicalInsurance, setIncludePhysicalInsurance] = useState<boolean>(true);
-  const [customTruckPrice, setCustomTruckPrice] = useState<number>(truck.price ?? 0);
-  const [displayPrice, setDisplayPrice] = useState<string>((truck.price ?? 0).toLocaleString('vi-VN'));
+
+  const initialPrice = truck?.price ?? 0;
+  const [customTruckPrice, setCustomTruckPrice] = useState<number>(initialPrice);
+  const [displayPrice, setDisplayPrice] = useState<string>(initialPrice.toLocaleString('vi-VN'));
 
   // Cập nhật giá xe tùy chỉnh khi truck thay đổi
   useEffect(() => {
-    const p = truck.price ?? 0;
+    const p = truck?.price ?? 0;
     setCustomTruckPrice(p);
     setDisplayPrice(p.toLocaleString('vi-VN'));
-  }, [truck.price]);
+  }, [truck?.price]);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^\d]/g, ''); // Chỉ lấy số
@@ -73,13 +75,14 @@ const RollingCostCalculator: React.FC<RollingCostCalculatorProps> = ({ truck }) 
 
     // 3. Phí bảo trì đường bộ (1 năm)
     let roadMaintenanceFee = 0;
-    const truckWeight = truck.weight; // Tấn
-    if (truck.type === 'dau-keo') {
+    const truckWeight = truck?.weight ?? 0;
+    const truckType = truck?.type ?? 'xe-tai';
+    if (truckType === 'dau-keo') {
       if (truckWeight < 19) roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRACTOR.UNDER_19_TONS;
       else if (truckWeight < 27) roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRACTOR.FROM_19_TO_UNDER_27_TONS;
       else if (truckWeight < 40) roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRACTOR.FROM_27_TO_UNDER_40_TONS;
       else roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRACTOR.FROM_40_TONS_UP;
-    } else if (truck.type === 'xe-tai' || truck.type === 'xe-cau') {
+    } else if (truckType === 'xe-tai' || truckType === 'xe-cau') {
       if (truckWeight < 4) roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRUCK.UNDER_4_TONS;
       else if (truckWeight < 8.5) roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRUCK.FROM_4_TO_UNDER_8_5_TONS;
       else if (truckWeight < 13) roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRUCK.FROM_8_5_TO_UNDER_13_TONS;
@@ -88,17 +91,17 @@ const RollingCostCalculator: React.FC<RollingCostCalculatorProps> = ({ truck }) 
       else roadMaintenanceFee = ROAD_MAINTENANCE_FEES_TRUCK.FROM_27_TONS_UP;
     }
     details.push({ label: 'Phí bảo trì đường bộ (1 năm)', value: roadMaintenanceFee });
-    
+
     // 4. Phí đăng kiểm
     let inspectionFee = 0;
-    if (truck.type === 'mooc') {
+    if (truckType === 'mooc') {
         inspectionFee = INSPECTION_FEE_DATA.TRAILER;
-    } else if (truck.type === 'dau-keo') {
+    } else if (truckType === 'dau-keo') {
         if (truckWeight < 19) inspectionFee = INSPECTION_FEE_DATA.TRACTOR.UNDER_19_TONS;
         else if (truckWeight < 27) inspectionFee = INSPECTION_FEE_DATA.TRACTOR.FROM_19_TO_UNDER_27_TONS;
         else if (truckWeight < 40) inspectionFee = INSPECTION_FEE_DATA.TRACTOR.FROM_27_TO_UNDER_40_TONS;
         else inspectionFee = INSPECTION_FEE_DATA.TRACTOR.FROM_40_TONS_UP;
-    } else if (truck.type === 'xe-tai' || truck.type === 'xe-cau') {
+    } else if (truckType === 'xe-tai' || truckType === 'xe-cau') {
         if (truckWeight < 4) inspectionFee = INSPECTION_FEE_DATA.TRUCK.UNDER_4_TONS;
         else if (truckWeight < 8.5) inspectionFee = INSPECTION_FEE_DATA.TRUCK.FROM_4_TO_UNDER_8_5_TONS;
         else if (truckWeight < 13) inspectionFee = INSPECTION_FEE_DATA.TRUCK.FROM_8_5_TO_UNDER_13_TONS;
@@ -110,26 +113,26 @@ const RollingCostCalculator: React.FC<RollingCostCalculatorProps> = ({ truck }) 
 
     // 5. Bảo hiểm TNDS bắt buộc (1 năm, đã bao gồm VAT)
     let civilLiabilityInsurancePreVAT = 0;
-    if (truck.type === 'dau-keo') {
+    if (truckType === 'dau-keo') {
       if (truckWeight < 19) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRACTOR.UNDER_19_TONS;
       else if (truckWeight < 27) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRACTOR.FROM_19_TO_UNDER_27_TONS;
       else if (truckWeight < 40) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRACTOR.FROM_27_TO_UNDER_40_TONS;
       else civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRACTOR.FROM_40_TONS_UP;
-    } else if (truck.type === 'xe-tai' || truck.type === 'xe-cau') {
+    } else if (truckType === 'xe-tai' || truckType === 'xe-cau') {
       if (truckWeight < 4) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRUCK.UNDER_4_TONS;
       else if (truckWeight < 8.5) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRUCK.FROM_4_TO_UNDER_8_5_TONS;
       else if (truckWeight < 13) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRUCK.FROM_8_5_TO_UNDER_13_TONS;
       else if (truckWeight < 19) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRUCK.FROM_13_TO_UNDER_19_TONS;
       else if (truckWeight < 27) civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRUCK.FROM_19_TO_UNDER_27_TONS;
       else civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRUCK.FROM_27_TONS_UP;
-    } else if (truck.type === 'mooc') {
+    } else if (truckType === 'mooc') {
       civilLiabilityInsurancePreVAT = CIVIL_LIABILITY_INSURANCE_FEES_PRE_VAT.TRAILER;
     }
     const civilLiabilityInsuranceWithVAT = civilLiabilityInsurancePreVAT * (1 + VAT_RATE);
     details.push({ label: 'Bảo hiểm TNDS (1 năm, đã VAT)', value: civilLiabilityInsuranceWithVAT });
 
     // 6. Bảo hiểm vật chất (tùy chọn)
-    if (includePhysicalInsurance && truck.type !== 'mooc') { // Thường không mua BHVC cho moóc riêng lẻ
+    if (includePhysicalInsurance && truckType !== 'mooc') {
       const physicalInsuranceFee = truckPrice * PHYSICAL_INSURANCE_RATE;
       details.push({ label: `Bảo hiểm vật chất (${(PHYSICAL_INSURANCE_RATE * 100).toFixed(1)}% giá trị xe)`, value: physicalInsuranceFee });
     }
@@ -148,7 +151,7 @@ const RollingCostCalculator: React.FC<RollingCostCalculatorProps> = ({ truck }) 
 
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-gray-800">Dự toán chi phí lăn bánh {truck.name}</h3>
+      <h3 className="text-xl font-semibold text-gray-800">Dự toán chi phí lăn bánh {truck?.name ?? 'xe'}</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
         <div>
@@ -182,14 +185,14 @@ const RollingCostCalculator: React.FC<RollingCostCalculatorProps> = ({ truck }) 
           id="includePhysicalInsurance"
           checked={includePhysicalInsurance}
           onCheckedChange={(checked) => setIncludePhysicalInsurance(checked as boolean)}
-          disabled={truck.type === 'mooc'} // Không cho chọn BHVC với mooc
+          disabled={truck?.type === 'mooc'}
         />
-        <Label 
-            htmlFor="includePhysicalInsurance" 
-            className={`text-sm font-medium text-gray-700 cursor-pointer ${truck.type === 'mooc' ? 'opacity-50 cursor-not-allowed' : ''}`}
+        <Label
+            htmlFor="includePhysicalInsurance"
+            className={`text-sm font-medium text-gray-700 cursor-pointer ${truck?.type === 'mooc' ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           Bao gồm Bảo hiểm vật chất thân xe (tạm tính {(PHYSICAL_INSURANCE_RATE * 100).toFixed(1)}% giá xe)
-          {truck.type === 'mooc' && <span className="text-xs"> (Không áp dụng cho SMRM)</span>}
+          {truck?.type === 'mooc' && <span className="text-xs"> (Không áp dụng cho SMRM)</span>}
         </Label>
       </div>
 
