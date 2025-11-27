@@ -39,6 +39,7 @@ const productsCollection = defineCollection({
     slug: z.string(),
     brand: z.union([z.string(), z.array(z.string())]),
     type: z.string(), // category key
+    model: z.string().optional(),
 
     // Pricing
     price: z.number().nullable().optional(),
